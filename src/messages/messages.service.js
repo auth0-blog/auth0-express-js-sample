@@ -14,7 +14,14 @@ const getProtectedMessage = () => {
   };
 };
 
+const getAdminMessage = () => {
+  return {
+    message: "The API successfully recognized you as an admin.",
+  };
+};
+
 module.exports = {
   getPublicMessage,
   getProtectedMessage,
+  getAdminMessage,
 };

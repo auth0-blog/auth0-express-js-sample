@@ -3,8 +3,14 @@
  */
 
 const express = require("express");
-const { getPublicMessage, getProtectedMessage } = require("./messages.service");
+const {
+  getPublicMessage,
+  getProtectedMessage,
+  getAdminMessage,
+} = require("./messages.service");
 const { checkJwt } = require("../authz/check-jwt");
+const { checkPermissions } = require("../authz/check-permissions");
+const { AdminMessagesPermissions } = require("./messages-permissions");
 
 /**
  * Router Definition
@@ -23,10 +29,21 @@ messagesRouter.get("/public-message", (req, res) => {
   res.status(200).send(message);
 });
 
-messagesRouter.get("/protected-message", checkJwt, (req, res) => {
+messagesRouter.use(checkJwt);
+
+messagesRouter.get("/protected-message", (req, res) => {
   const message = getProtectedMessage();
   res.status(200).send(message);
 });
+
+messagesRouter.get(
+  "/admin-message",
+  checkPermissions(AdminMessagesPermissions.ReadAdminMessages),
+  (req, res) => {
+    const message = getAdminMessage();
+    res.status(200).send(message);
+  }
+);
 
 module.exports = {
   messagesRouter,

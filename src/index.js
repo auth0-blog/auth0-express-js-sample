@@ -30,7 +30,7 @@ apiRouter.use("/messages", messagesRouter);
 
 app.use(function (err, req, res, next) {
   console.log(err);
-  res.status(500).send(err.message);
+  res.status(500).send(err);
 });
 
 /**
