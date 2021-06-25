@@ -31,12 +31,11 @@ if (!clientOriginUrl) {
   );
 }
 
-const clientOrigins = ["http://localhost:4040"];
+const clientOrigins = [clientOriginUrl];
 
 module.exports = {
   audience,
   domain,
   serverPort,
-  clientOriginUrl,
-  clientOrigins,
+  clientOrigins
 };
